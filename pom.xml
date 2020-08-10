@@ -15,6 +15,9 @@
         <module>ttmall-order</module>
         <module>ttmall-product</module>
         <module>ttmall-ware</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>ttmall-common</module>
     </modules>
 
 </project>
