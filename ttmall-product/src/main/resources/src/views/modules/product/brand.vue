@@ -23,46 +23,46 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="id"
+        prop="brandId"
         header-align="center"
         align="center"
-        label="品牌id">
+        label="Ʒ">
       </el-table-column>
       <el-table-column
         prop="name"
         header-align="center"
         align="center"
-        label="品牌名">
+        label="Ʒ">
       </el-table-column>
       <el-table-column
         prop="logo"
         header-align="center"
         align="center"
-        label="品牌logo">
+        label="Ʒ">
       </el-table-column>
       <el-table-column
-        prop="status"
+        prop="descript"
         header-align="center"
         align="center"
-        label="显示状态[0-不显示；1-显示]">
+        label="">
+      </el-table-column>
+      <el-table-column
+        prop="showStatus"
+        header-align="center"
+        align="center"
+        label="">
       </el-table-column>
       <el-table-column
         prop="firstLetter"
         header-align="center"
         align="center"
-        label="检索首字母">
+        label="">
       </el-table-column>
       <el-table-column
         prop="sort"
         header-align="center"
         align="center"
-        label="排序">
-      </el-table-column>
-      <el-table-column
-        prop="remark"
-        header-align="center"
-        align="center"
-        label="备注">
+        label="">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -71,8 +71,8 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.brandId)">修改</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row.brandId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -161,7 +161,7 @@
       // 删除
       deleteHandle (id) {
         var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
+          return item.brandId
         })
         this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
           confirmButtonText: '确定',

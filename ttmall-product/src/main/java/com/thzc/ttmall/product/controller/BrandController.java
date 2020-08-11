@@ -3,11 +3,7 @@ package com.thzc.ttmall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-
-import com.thzc.common.utils.PageUtils;
-import com.thzc.common.utils.R;
-import com.thzc.ttmall.product.entity.BrandEntity;
-import com.thzc.ttmall.product.service.BrandService;
+//import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thzc.ttmall.product.entity.BrandEntity;
+import com.thzc.ttmall.product.service.BrandService;
+import com.thzc.common.utils.PageUtils;
+import com.thzc.common.utils.R;
+
+
 
 /**
- * 品牌
+ * Ʒ
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-09 09:49:26
+ * @date 2020-08-11 11:22:42
  */
 @RestController
 @RequestMapping("product/brand")
@@ -44,10 +46,10 @@ public class BrandController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @RequestMapping("/info/{brandId}")
   //  @RequiresPermissions("product:brand:info")
-    public R info(@PathVariable("id") Long id){
-		BrandEntity brand = brandService.getById(id);
+    public R info(@PathVariable("brandId") Long brandId){
+		BrandEntity brand = brandService.getById(brandId);
 
         return R.ok().put("brand", brand);
     }
@@ -79,8 +81,8 @@ public class BrandController {
      */
     @RequestMapping("/delete")
    // @RequiresPermissions("product:brand:delete")
-    public R delete(@RequestBody Long[] ids){
-		brandService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] brandIds){
+		brandService.removeByIds(Arrays.asList(brandIds));
 
         return R.ok();
     }

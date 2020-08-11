@@ -3,10 +3,7 @@ package com.thzc.ttmall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.thzc.common.utils.PageUtils;
-import com.thzc.common.utils.R;
-import com.thzc.ttmall.product.entity.AttrGroupEntity;
-import com.thzc.ttmall.product.service.AttrGroupService;
+//import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thzc.ttmall.product.entity.AttrGroupEntity;
+import com.thzc.ttmall.product.service.AttrGroupService;
+import com.thzc.common.utils.PageUtils;
+import com.thzc.common.utils.R;
+
+
 
 /**
- * 属性分组
+ * 
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-09 09:49:26
+ * @date 2020-08-11 11:22:42
  */
 @RestController
 @RequestMapping("product/attrgroup")
@@ -43,10 +46,10 @@ public class AttrGroupController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @RequestMapping("/info/{attrGroupId}")
   //  @RequiresPermissions("product:attrgroup:info")
-    public R info(@PathVariable("id") Long id){
-		AttrGroupEntity attrGroup = attrGroupService.getById(id);
+    public R info(@PathVariable("attrGroupId") Long attrGroupId){
+		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
 
         return R.ok().put("attrGroup", attrGroup);
     }
@@ -78,8 +81,8 @@ public class AttrGroupController {
      */
     @RequestMapping("/delete")
    // @RequiresPermissions("product:attrgroup:delete")
-    public R delete(@RequestBody Long[] ids){
-		attrGroupService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] attrGroupIds){
+		attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
 
         return R.ok();
     }

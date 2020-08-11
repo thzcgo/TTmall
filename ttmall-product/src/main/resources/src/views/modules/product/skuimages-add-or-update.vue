@@ -7,14 +7,14 @@
     <el-form-item label="sku_id" prop="skuId">
       <el-input v-model="dataForm.skuId" placeholder="sku_id"></el-input>
     </el-form-item>
-    <el-form-item label="图片地址" prop="url">
-      <el-input v-model="dataForm.url" placeholder="图片地址"></el-input>
+    <el-form-item label="ͼƬ" prop="imgUrl">
+      <el-input v-model="dataForm.imgUrl" placeholder="ͼƬ"></el-input>
     </el-form-item>
-    <el-form-item label="排序" prop="sort">
-      <el-input v-model="dataForm.sort" placeholder="排序"></el-input>
+    <el-form-item label="" prop="imgSort">
+      <el-input v-model="dataForm.imgSort" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="默认图[0 - 不是默认图，1 - 是默认图]" prop="defaultStatus">
-      <el-input v-model="dataForm.defaultStatus" placeholder="默认图[0 - 不是默认图，1 - 是默认图]"></el-input>
+    <el-form-item label="Ĭ" prop="defaultImg">
+      <el-input v-model="dataForm.defaultImg" placeholder="Ĭ"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -32,22 +32,22 @@
         dataForm: {
           id: 0,
           skuId: '',
-          url: '',
-          sort: '',
-          defaultStatus: ''
+          imgUrl: '',
+          imgSort: '',
+          defaultImg: ''
         },
         dataRule: {
           skuId: [
             { required: true, message: 'sku_id不能为空', trigger: 'blur' }
           ],
-          url: [
-            { required: true, message: '图片地址不能为空', trigger: 'blur' }
+          imgUrl: [
+            { required: true, message: 'ͼƬ不能为空', trigger: 'blur' }
           ],
-          sort: [
-            { required: true, message: '排序不能为空', trigger: 'blur' }
+          imgSort: [
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
-          defaultStatus: [
-            { required: true, message: '默认图[0 - 不是默认图，1 - 是默认图]不能为空', trigger: 'blur' }
+          defaultImg: [
+            { required: true, message: 'Ĭ不能为空', trigger: 'blur' }
           ]
         }
       }
@@ -66,9 +66,9 @@
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.dataForm.skuId = data.skuImages.skuId
-                this.dataForm.url = data.skuImages.url
-                this.dataForm.sort = data.skuImages.sort
-                this.dataForm.defaultStatus = data.skuImages.defaultStatus
+                this.dataForm.imgUrl = data.skuImages.imgUrl
+                this.dataForm.imgSort = data.skuImages.imgSort
+                this.dataForm.defaultImg = data.skuImages.defaultImg
               }
             })
           }
@@ -84,9 +84,9 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'skuId': this.dataForm.skuId,
-                'url': this.dataForm.url,
-                'sort': this.dataForm.sort,
-                'defaultStatus': this.dataForm.defaultStatus
+                'imgUrl': this.dataForm.imgUrl,
+                'imgSort': this.dataForm.imgSort,
+                'defaultImg': this.dataForm.defaultImg
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

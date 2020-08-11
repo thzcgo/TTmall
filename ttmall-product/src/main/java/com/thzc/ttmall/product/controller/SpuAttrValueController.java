@@ -3,11 +3,7 @@ package com.thzc.ttmall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-
-import com.thzc.common.utils.PageUtils;
-import com.thzc.common.utils.R;
-import com.thzc.ttmall.product.entity.SpuAttrValueEntity;
-import com.thzc.ttmall.product.service.SpuAttrValueService;
+//import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thzc.ttmall.product.entity.SpuAttrValueEntity;
+import com.thzc.ttmall.product.service.SpuAttrValueService;
+import com.thzc.common.utils.PageUtils;
+import com.thzc.common.utils.R;
+
+
 
 /**
  * spu属性值
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-09 09:49:25
+ * @date 2020-08-11 11:22:43
  */
 @RestController
 @RequestMapping("product/spuattrvalue")

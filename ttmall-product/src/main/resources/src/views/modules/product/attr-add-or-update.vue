@@ -4,32 +4,29 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-    <el-form-item label="属性名" prop="name">
-      <el-input v-model="dataForm.name" placeholder="属性名"></el-input>
+    <el-form-item label="" prop="attrName">
+      <el-input v-model="dataForm.attrName" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="是否需要检索[0-不需要，1-需要]" prop="searchType">
-      <el-input v-model="dataForm.searchType" placeholder="是否需要检索[0-不需要，1-需要]"></el-input>
+    <el-form-item label="" prop="searchType">
+      <el-input v-model="dataForm.searchType" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="属性图标" prop="icon">
-      <el-input v-model="dataForm.icon" placeholder="属性图标"></el-input>
+    <el-form-item label="" prop="icon">
+      <el-input v-model="dataForm.icon" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="可选值列表[用逗号分隔]" prop="valueSelect">
-      <el-input v-model="dataForm.valueSelect" placeholder="可选值列表[用逗号分隔]"></el-input>
+    <el-form-item label="" prop="valueSelect">
+      <el-input v-model="dataForm.valueSelect" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]" prop="type">
-      <el-input v-model="dataForm.type" placeholder="属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]"></el-input>
+    <el-form-item label="" prop="attrType">
+      <el-input v-model="dataForm.attrType" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="启用状态[0 - 禁用，1 - 启用]" prop="enable">
-      <el-input v-model="dataForm.enable" placeholder="启用状态[0 - 禁用，1 - 启用]"></el-input>
+    <el-form-item label="" prop="enable">
+      <el-input v-model="dataForm.enable" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整" prop="showDesc">
-      <el-input v-model="dataForm.showDesc" placeholder="快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整"></el-input>
+    <el-form-item label="" prop="catelogId">
+      <el-input v-model="dataForm.catelogId" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="所属分类" prop="categoryId">
-      <el-input v-model="dataForm.categoryId" placeholder="所属分类"></el-input>
-    </el-form-item>
-    <el-form-item label="规格分组id" prop="groupId">
-      <el-input v-model="dataForm.groupId" placeholder="规格分组id"></el-input>
+    <el-form-item label="" prop="showDesc">
+      <el-input v-model="dataForm.showDesc" placeholder=""></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -45,70 +42,65 @@
       return {
         visible: false,
         dataForm: {
-          id: 0,
-          name: '',
+          attrId: 0,
+          attrName: '',
           searchType: '',
           icon: '',
           valueSelect: '',
-          type: '',
+          attrType: '',
           enable: '',
-          showDesc: '',
-          categoryId: '',
-          groupId: ''
+          catelogId: '',
+          showDesc: ''
         },
         dataRule: {
-          name: [
-            { required: true, message: '属性名不能为空', trigger: 'blur' }
+          attrName: [
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
           searchType: [
-            { required: true, message: '是否需要检索[0-不需要，1-需要]不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
           icon: [
-            { required: true, message: '属性图标不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
           valueSelect: [
-            { required: true, message: '可选值列表[用逗号分隔]不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
-          type: [
-            { required: true, message: '属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]不能为空', trigger: 'blur' }
+          attrType: [
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
           enable: [
-            { required: true, message: '启用状态[0 - 禁用，1 - 启用]不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
+          ],
+          catelogId: [
+            { required: true, message: '不能为空', trigger: 'blur' }
           ],
           showDesc: [
-            { required: true, message: '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整不能为空', trigger: 'blur' }
-          ],
-          categoryId: [
-            { required: true, message: '所属分类不能为空', trigger: 'blur' }
-          ],
-          groupId: [
-            { required: true, message: '规格分组id不能为空', trigger: 'blur' }
+            { required: true, message: '不能为空', trigger: 'blur' }
           ]
         }
       }
     },
     methods: {
       init (id) {
-        this.dataForm.id = id || 0
+        this.dataForm.attrId = id || 0
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          if (this.dataForm.id) {
+          if (this.dataForm.attrId) {
             this.$http({
-              url: this.$http.adornUrl(`/product/attr/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/product/attr/info/${this.dataForm.attrId}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.code === 0) {
-                this.dataForm.name = data.attr.name
+                this.dataForm.attrName = data.attr.attrName
                 this.dataForm.searchType = data.attr.searchType
                 this.dataForm.icon = data.attr.icon
                 this.dataForm.valueSelect = data.attr.valueSelect
-                this.dataForm.type = data.attr.type
+                this.dataForm.attrType = data.attr.attrType
                 this.dataForm.enable = data.attr.enable
+                this.dataForm.catelogId = data.attr.catelogId
                 this.dataForm.showDesc = data.attr.showDesc
-                this.dataForm.categoryId = data.attr.categoryId
-                this.dataForm.groupId = data.attr.groupId
               }
             })
           }
@@ -119,19 +111,18 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/product/attr/${!this.dataForm.id ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/product/attr/${!this.dataForm.attrId ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
-                'id': this.dataForm.id || undefined,
-                'name': this.dataForm.name,
+                'attrId': this.dataForm.attrId || undefined,
+                'attrName': this.dataForm.attrName,
                 'searchType': this.dataForm.searchType,
                 'icon': this.dataForm.icon,
                 'valueSelect': this.dataForm.valueSelect,
-                'type': this.dataForm.type,
+                'attrType': this.dataForm.attrType,
                 'enable': this.dataForm.enable,
-                'showDesc': this.dataForm.showDesc,
-                'categoryId': this.dataForm.categoryId,
-                'groupId': this.dataForm.groupId
+                'catelogId': this.dataForm.catelogId,
+                'showDesc': this.dataForm.showDesc
               })
             }).then(({data}) => {
               if (data && data.code === 0) {
