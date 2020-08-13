@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
       - id: product_route
-        uri: lb://ttmaill-product
+        uri: lb://ttmall-product
         predicates:
           - Path=/api/product/**
         filters:
