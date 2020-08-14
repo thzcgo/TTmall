@@ -96,7 +96,6 @@ public class CategoryController {
     public R updateSort(@RequestBody CategoryEntity[] category){
        // categoryService.updateById(category);
         categoryService.updateBatchById(Arrays.asList(category));
-
         return R.ok();
     }
 
@@ -106,7 +105,7 @@ public class CategoryController {
     @RequestMapping("/delete")
    // @RequiresPermissions("product:category:delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+		//categoryService.removeByIds(Arrays.asList(catIds));
 
         categoryService.removeByMenuIds(Arrays.asList(catIds));
 
