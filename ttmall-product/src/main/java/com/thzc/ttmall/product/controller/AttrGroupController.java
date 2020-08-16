@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.thzc.ttmall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,20 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    /**
+     * 列表
+     */
+    @RequestMapping("/list/{catelogId}")
+    // @RequiresPermissions("product:attrgroup:list")
+    public R listWithcatelogId(@RequestParam Map<String, Object> params,@PathVariable("catelogId") Long catelogId){
+        PageUtils page = attrGroupService.queryPage(params,catelogId);
+
+        return R.ok().put("page", page);
+    }
+
     /**
      * 列表
      */
@@ -47,10 +62,13 @@ public class AttrGroupController {
      * 信息
      */
     @RequestMapping("/info/{attrGroupId}")
-  //  @RequiresPermissions("product:attrgroup:info")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
-
+		// 得到三级分类的id
+        Long catelogId = attrGroup.getCatelogId();
+        // 通过三级分类的id查询完整的分类路径
+        Long[] path = categoryService.findCatelogPath(catelogId);
+        attrGroup.setCatelogPath(path);
         return R.ok().put("attrGroup", attrGroup);
     }
 
