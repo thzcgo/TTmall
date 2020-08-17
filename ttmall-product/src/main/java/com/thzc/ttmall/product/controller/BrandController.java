@@ -7,6 +7,7 @@ import java.util.Map;
 import com.thzc.common.valid.AddGroup;
 import com.thzc.common.valid.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,11 +71,12 @@ public class BrandController {
     /**
      * 修改
      */
+    @Transactional
     @RequestMapping("/update")
  //   @RequiresPermissions("product:brand:update")
     public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
-
+		//brandService.updateById(brand);
+        brandService.updateByIdWithDetail(brand);
         return R.ok();
     }
 

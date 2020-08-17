@@ -1,5 +1,7 @@
 package com.thzc.ttmall.product.service.impl;
 
+import com.thzc.ttmall.product.service.CategoryBrandRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ import com.thzc.ttmall.product.service.CategoryService;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -72,7 +77,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<Long> paths = new ArrayList<>();
         List<Long> parentPath = findParentPath(catelogId, paths);
         Collections.reverse(parentPath);
-        return (Long[]) parentPath.toArray();
+       // return (Long[]) parentPath.toArray();
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
     }
 
     private List<Long> findParentPath(Long catelogId,List<Long> paths){

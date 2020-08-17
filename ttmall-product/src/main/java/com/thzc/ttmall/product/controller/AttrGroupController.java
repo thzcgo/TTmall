@@ -1,16 +1,18 @@
 package com.thzc.ttmall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.thzc.ttmall.product.entity.AttrEntity;
+import com.thzc.ttmall.product.service.AttrAttrgroupRelationService;
+import com.thzc.ttmall.product.service.AttrService;
 import com.thzc.ttmall.product.service.CategoryService;
+import com.thzc.ttmall.product.vo.AttrGroupRelationVo;
+import com.thzc.ttmall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.thzc.ttmall.product.entity.AttrGroupEntity;
 import com.thzc.ttmall.product.service.AttrGroupService;
@@ -35,6 +37,41 @@ public class AttrGroupController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private AttrService attrService;
+
+    @Autowired
+    private AttrAttrgroupRelationService relationService;
+
+
+    ///product/attrgroup/attr/relation
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> vos){
+
+        relationService.saveBatch(vos);
+        return R.ok();
+    }
+
+    ///product/attrgroup/{attrgroupId}/noattr/relation
+    @GetMapping("/{attrgroupId}/noattr/relation")
+    public R attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId,
+                            @RequestParam Map<String, Object> params){
+        PageUtils page = attrService.getNoRelationAttr(params,attrgroupId);
+        return R.ok().put("page",page);
+    }
+
+    @PostMapping("/attr/relation/delete")
+    public R deleteRelation(@RequestBody  AttrGroupRelationVo[] vos){
+        attrService.deleteRelation(vos);
+        return R.ok();
+    }
+
+    ///product/attrgroup/{attrgroupId}/attr/relation
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId){
+        List<AttrEntity> entities =  attrService.getRelationAttr(attrgroupId);
+        return R.ok().put("data",entities);
+    }
     /**
      * 列表
      */
@@ -76,12 +113,13 @@ public class AttrGroupController {
      * 保存
      */
     @RequestMapping("/save")
-  //  @RequiresPermissions("product:attrgroup:save")
     public R save(@RequestBody AttrGroupEntity attrGroup){
 		attrGroupService.save(attrGroup);
 
         return R.ok();
     }
+
+
 
     /**
      * 修改

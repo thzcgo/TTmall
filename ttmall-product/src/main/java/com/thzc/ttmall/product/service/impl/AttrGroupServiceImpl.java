@@ -1,5 +1,11 @@
 package com.thzc.ttmall.product.service.impl;
 
+import com.thzc.ttmall.product.dao.AttrAttrgroupRelationDao;
+import com.thzc.ttmall.product.entity.AttrAttrgroupRelationEntity;
+import com.thzc.ttmall.product.entity.AttrEntity;
+import com.thzc.ttmall.product.vo.AttrVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,6 +22,9 @@ import org.springframework.util.StringUtils;
 
 @Service("attrGroupService")
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
+
+    @Autowired
+    private AttrAttrgroupRelationDao relationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -53,5 +62,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             return new PageUtils(page);
         }
     }
+
+
 
 }
