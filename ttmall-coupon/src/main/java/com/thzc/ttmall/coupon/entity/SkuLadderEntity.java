@@ -13,7 +13,7 @@ import lombok.Data;
  * 
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 10:45:14
+ * @date 2020-08-18 11:18:41
  */
 @Data
 @TableName("sms_sku_ladder")
@@ -37,6 +37,10 @@ public class SkuLadderEntity implements Serializable {
 	 * 打几折
 	 */
 	private BigDecimal discount;
+	/**
+	 * 折后价
+	 */
+	private BigDecimal price;
 	/**
 	 * 是否叠加其他优惠[0-不可叠加，1-可叠加]
 	 */

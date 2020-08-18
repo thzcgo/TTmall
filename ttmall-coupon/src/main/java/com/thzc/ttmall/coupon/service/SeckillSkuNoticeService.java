@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 10:45:15
+ * @date 2020-08-18 11:18:41
  */
 public interface SeckillSkuNoticeService extends IService<SeckillSkuNoticeEntity> {
 

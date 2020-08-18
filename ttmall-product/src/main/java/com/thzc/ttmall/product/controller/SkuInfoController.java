@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.thzc.ttmall.product.service.SpuInfoService;
+import com.thzc.ttmall.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,8 @@ import com.thzc.common.utils.R;
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
+    @Autowired
+    private SpuInfoService spuInfoService;
 
     /**
      * 列表
@@ -58,10 +62,8 @@ public class SkuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-  //  @RequiresPermissions("product:skuinfo:save")
-    public R save(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.save(skuInfo);
-
+    public R save(@RequestBody SpuSaveVo vo){
+        spuInfoService.saveSpuInfo(vo);
         return R.ok();
     }
 

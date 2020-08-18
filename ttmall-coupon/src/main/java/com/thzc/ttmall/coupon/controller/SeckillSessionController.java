@@ -3,6 +3,7 @@ package com.thzc.ttmall.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ import com.thzc.common.utils.R;
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 10:45:15
+ * @date 2020-08-18 11:18:41
  */
 @RestController
 @RequestMapping("coupon/seckillsession")
@@ -34,7 +35,6 @@ public class SeckillSessionController {
      * 列表
      */
     @RequestMapping("/list")
-   // @RequiresPermissions("coupon:seckillsession:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = seckillSessionService.queryPage(params);
 
@@ -46,7 +46,6 @@ public class SeckillSessionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-  //  @RequiresPermissions("coupon:seckillsession:info")
     public R info(@PathVariable("id") Long id){
 		SeckillSessionEntity seckillSession = seckillSessionService.getById(id);
 
@@ -57,7 +56,6 @@ public class SeckillSessionController {
      * 保存
      */
     @RequestMapping("/save")
-  //  @RequiresPermissions("coupon:seckillsession:save")
     public R save(@RequestBody SeckillSessionEntity seckillSession){
 		seckillSessionService.save(seckillSession);
 
@@ -68,7 +66,6 @@ public class SeckillSessionController {
      * 修改
      */
     @RequestMapping("/update")
- //   @RequiresPermissions("coupon:seckillsession:update")
     public R update(@RequestBody SeckillSessionEntity seckillSession){
 		seckillSessionService.updateById(seckillSession);
 
@@ -79,7 +76,6 @@ public class SeckillSessionController {
      * 删除
      */
     @RequestMapping("/delete")
-   // @RequiresPermissions("coupon:seckillsession:delete")
     public R delete(@RequestBody Long[] ids){
 		seckillSessionService.removeByIds(Arrays.asList(ids));
 

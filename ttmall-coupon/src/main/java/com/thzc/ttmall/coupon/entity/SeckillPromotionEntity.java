@@ -12,7 +12,7 @@ import lombok.Data;
  * 
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 10:45:14
+ * @date 2020-08-18 11:18:41
  */
 @Data
 @TableName("sms_seckill_promotion")
