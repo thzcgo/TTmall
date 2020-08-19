@@ -55,7 +55,6 @@ public class SpuBoundsController {
     @PostMapping("/save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
         spuBoundsService.save(spuBounds);
-
         return R.ok();
     }
 

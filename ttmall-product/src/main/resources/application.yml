@@ -11,6 +11,9 @@ spring:
   application:
     name: ttmall-product
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
@@ -22,3 +25,7 @@ mybatis-plus:
 
 server:
   port: 8081
+
+logging:
+  level:
+    com.atguigu.gulimall: debug

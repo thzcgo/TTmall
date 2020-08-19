@@ -18,6 +18,7 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>ttmall-common</module>
+        <module>ttmall-search</module>
     </modules>
 
 </project>

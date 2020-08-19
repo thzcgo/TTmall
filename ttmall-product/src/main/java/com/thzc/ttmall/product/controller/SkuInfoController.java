@@ -62,8 +62,10 @@ public class SkuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody SpuSaveVo vo){
-        spuInfoService.saveSpuInfo(vo);
+    //@RequiresPermissions("product:skuinfo:save")
+    public R save(@RequestBody SkuInfoEntity skuInfo){
+        skuInfoService.save(skuInfo);
+
         return R.ok();
     }
 
