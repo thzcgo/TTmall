@@ -19,9 +19,6 @@
     <el-form-item label="锁定库存" prop="stockLocked">
       <el-input v-model="dataForm.stockLocked" placeholder="锁定库存"></el-input>
     </el-form-item>
-    <el-form-item label="销量" prop="sales">
-      <el-input v-model="dataForm.sales" placeholder="销量"></el-input>
-    </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -41,8 +38,7 @@
           wareId: '',
           stock: '',
           skuName: '',
-          stockLocked: '',
-          sales: ''
+          stockLocked: ''
         },
         dataRule: {
           skuId: [
@@ -59,9 +55,6 @@
           ],
           stockLocked: [
             { required: true, message: '锁定库存不能为空', trigger: 'blur' }
-          ],
-          sales: [
-            { required: true, message: '销量不能为空', trigger: 'blur' }
           ]
         }
       }
@@ -84,7 +77,6 @@
                 this.dataForm.stock = data.wareSku.stock
                 this.dataForm.skuName = data.wareSku.skuName
                 this.dataForm.stockLocked = data.wareSku.stockLocked
-                this.dataForm.sales = data.wareSku.sales
               }
             })
           }
@@ -103,8 +95,7 @@
                 'wareId': this.dataForm.wareId,
                 'stock': this.dataForm.stock,
                 'skuName': this.dataForm.skuName,
-                'stockLocked': this.dataForm.stockLocked,
-                'sales': this.dataForm.sales
+                'stockLocked': this.dataForm.stockLocked
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

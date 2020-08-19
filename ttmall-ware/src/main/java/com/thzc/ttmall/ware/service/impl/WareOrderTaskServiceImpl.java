@@ -8,19 +8,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thzc.common.utils.PageUtils;
 import com.thzc.common.utils.Query;
 
-import com.thzc.ttmall.ware.dao.WareDao;
-import com.thzc.ttmall.ware.entity.WareEntity;
-import com.thzc.ttmall.ware.service.WareService;
+import com.thzc.ttmall.ware.dao.WareOrderTaskDao;
+import com.thzc.ttmall.ware.entity.WareOrderTaskEntity;
+import com.thzc.ttmall.ware.service.WareOrderTaskService;
 
 
-@Service("wareService")
-public class WareServiceImpl extends ServiceImpl<WareDao, WareEntity> implements WareService {
+@Service("wareOrderTaskService")
+public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskDao, WareOrderTaskEntity> implements WareOrderTaskService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<WareEntity> page = this.page(
-                new Query<WareEntity>().getPage(params),
-                new QueryWrapper<WareEntity>()
+        IPage<WareOrderTaskEntity> page = this.page(
+                new Query<WareOrderTaskEntity>().getPage(params),
+                new QueryWrapper<WareOrderTaskEntity>()
         );
 
         return new PageUtils(page);

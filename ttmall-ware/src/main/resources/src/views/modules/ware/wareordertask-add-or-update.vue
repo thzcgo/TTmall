@@ -123,24 +123,24 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/ware/wareorderbill/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/ware/wareordertask/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.code === 0) {
-                this.dataForm.orderId = data.wareOrderBill.orderId
-                this.dataForm.orderSn = data.wareOrderBill.orderSn
-                this.dataForm.consignee = data.wareOrderBill.consignee
-                this.dataForm.consigneeTel = data.wareOrderBill.consigneeTel
-                this.dataForm.deliveryAddress = data.wareOrderBill.deliveryAddress
-                this.dataForm.orderComment = data.wareOrderBill.orderComment
-                this.dataForm.paymentWay = data.wareOrderBill.paymentWay
-                this.dataForm.taskStatus = data.wareOrderBill.taskStatus
-                this.dataForm.orderBody = data.wareOrderBill.orderBody
-                this.dataForm.trackingNo = data.wareOrderBill.trackingNo
-                this.dataForm.createTime = data.wareOrderBill.createTime
-                this.dataForm.wareId = data.wareOrderBill.wareId
-                this.dataForm.taskComment = data.wareOrderBill.taskComment
+                this.dataForm.orderId = data.wareOrderTask.orderId
+                this.dataForm.orderSn = data.wareOrderTask.orderSn
+                this.dataForm.consignee = data.wareOrderTask.consignee
+                this.dataForm.consigneeTel = data.wareOrderTask.consigneeTel
+                this.dataForm.deliveryAddress = data.wareOrderTask.deliveryAddress
+                this.dataForm.orderComment = data.wareOrderTask.orderComment
+                this.dataForm.paymentWay = data.wareOrderTask.paymentWay
+                this.dataForm.taskStatus = data.wareOrderTask.taskStatus
+                this.dataForm.orderBody = data.wareOrderTask.orderBody
+                this.dataForm.trackingNo = data.wareOrderTask.trackingNo
+                this.dataForm.createTime = data.wareOrderTask.createTime
+                this.dataForm.wareId = data.wareOrderTask.wareId
+                this.dataForm.taskComment = data.wareOrderTask.taskComment
               }
             })
           }
@@ -151,7 +151,7 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/ware/wareorderbill/${!this.dataForm.id ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/ware/wareordertask/${!this.dataForm.id ? 'save' : 'update'}`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,

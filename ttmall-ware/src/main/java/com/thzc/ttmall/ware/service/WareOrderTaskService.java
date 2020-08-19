@@ -2,7 +2,7 @@ package com.thzc.ttmall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.thzc.common.utils.PageUtils;
-import com.thzc.ttmall.ware.entity.WareOrderBillDetailEntity;
+import com.thzc.ttmall.ware.entity.WareOrderTaskEntity;
 
 import java.util.Map;
 
@@ -11,9 +11,9 @@ import java.util.Map;
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 14:17:22
+ * @date 2020-08-19 12:36:53
  */
-public interface WareOrderBillDetailService extends IService<WareOrderBillDetailEntity> {
+public interface WareOrderTaskService extends IService<WareOrderTaskEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 }

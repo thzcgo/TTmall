@@ -1,17 +1,17 @@
 package com.thzc.ttmall.ware.dao;
 
-import com.thzc.ttmall.ware.entity.WareEntity;
+import com.thzc.ttmall.ware.entity.WareOrderTaskEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 仓库信息
+ * 库存工作单
  * 
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 14:17:21
+ * @date 2020-08-19 12:36:53
  */
 @Mapper
-public interface WareDao extends BaseMapper<WareEntity> {
+public interface WareOrderTaskDao extends BaseMapper<WareOrderTaskEntity> {
 	
 }

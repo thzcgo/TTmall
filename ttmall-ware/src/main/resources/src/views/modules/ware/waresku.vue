@@ -59,12 +59,6 @@
         label="锁定库存">
       </el-table-column>
       <el-table-column
-        prop="sales"
-        header-align="center"
-        align="center"
-        label="销量">
-      </el-table-column>
-      <el-table-column
         fixed="right"
         header-align="center"
         align="center"

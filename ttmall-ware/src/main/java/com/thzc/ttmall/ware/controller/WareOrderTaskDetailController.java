@@ -3,7 +3,7 @@ package com.thzc.ttmall.ware.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thzc.ttmall.ware.entity.WareOrderBillEntity;
-import com.thzc.ttmall.ware.service.WareOrderBillService;
+import com.thzc.ttmall.ware.entity.WareOrderTaskDetailEntity;
+import com.thzc.ttmall.ware.service.WareOrderTaskDetailService;
 import com.thzc.common.utils.PageUtils;
 import com.thzc.common.utils.R;
 
@@ -23,21 +23,20 @@ import com.thzc.common.utils.R;
  *
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 14:17:21
+ * @date 2020-08-19 12:36:53
  */
 @RestController
-@RequestMapping("ware/wareorderbill")
-public class WareOrderBillController {
+@RequestMapping("ware/wareordertaskdetail")
+public class WareOrderTaskDetailController {
     @Autowired
-    private WareOrderBillService wareOrderBillService;
+    private WareOrderTaskDetailService wareOrderTaskDetailService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-   // @RequiresPermissions("ware:wareorderbill:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = wareOrderBillService.queryPage(params);
+        PageUtils page = wareOrderTaskDetailService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -47,20 +46,18 @@ public class WareOrderBillController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-  //  @RequiresPermissions("ware:wareorderbill:info")
     public R info(@PathVariable("id") Long id){
-		WareOrderBillEntity wareOrderBill = wareOrderBillService.getById(id);
+		WareOrderTaskDetailEntity wareOrderTaskDetail = wareOrderTaskDetailService.getById(id);
 
-        return R.ok().put("wareOrderBill", wareOrderBill);
+        return R.ok().put("wareOrderTaskDetail", wareOrderTaskDetail);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-  //  @RequiresPermissions("ware:wareorderbill:save")
-    public R save(@RequestBody WareOrderBillEntity wareOrderBill){
-		wareOrderBillService.save(wareOrderBill);
+    public R save(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail){
+		wareOrderTaskDetailService.save(wareOrderTaskDetail);
 
         return R.ok();
     }
@@ -69,9 +66,8 @@ public class WareOrderBillController {
      * 修改
      */
     @RequestMapping("/update")
- //   @RequiresPermissions("ware:wareorderbill:update")
-    public R update(@RequestBody WareOrderBillEntity wareOrderBill){
-		wareOrderBillService.updateById(wareOrderBill);
+    public R update(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail){
+		wareOrderTaskDetailService.updateById(wareOrderTaskDetail);
 
         return R.ok();
     }
@@ -80,9 +76,8 @@ public class WareOrderBillController {
      * 删除
      */
     @RequestMapping("/delete")
-   // @RequiresPermissions("ware:wareorderbill:delete")
     public R delete(@RequestBody Long[] ids){
-		wareOrderBillService.removeByIds(Arrays.asList(ids));
+		wareOrderTaskDetailService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

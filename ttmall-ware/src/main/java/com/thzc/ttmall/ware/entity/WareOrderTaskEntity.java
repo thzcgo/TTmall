@@ -12,11 +12,11 @@ import lombok.Data;
  * 
  * @author thzc
  * @email 780417172@qq.com
- * @date 2020-08-10 14:17:21
+ * @date 2020-08-19 12:36:53
  */
 @Data
-@TableName("wms_ware_order_bill")
-public class WareOrderBillEntity implements Serializable {
+@TableName("wms_ware_order_task")
+public class WareOrderTaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
