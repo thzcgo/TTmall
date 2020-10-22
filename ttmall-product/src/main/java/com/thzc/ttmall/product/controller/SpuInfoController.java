@@ -42,6 +42,7 @@ public class SpuInfoController {
 //
 //        return R.ok().put("page", page);
 //    }
+
     /**
      * 商品上架
      */

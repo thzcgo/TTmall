@@ -17,9 +17,6 @@ public class SkuEsModel {
 
     private String skuImg;
 
-    /**
-     * 是否有库存
-     * */
     private Boolean hasStock;
 
     private Long hotScore;

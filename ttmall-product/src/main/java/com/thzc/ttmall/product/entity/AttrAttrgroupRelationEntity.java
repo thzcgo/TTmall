@@ -19,22 +19,13 @@ import lombok.Data;
 public class AttrAttrgroupRelationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
 	@TableId
 	private Long id;
-	/**
-	 * 
-	 */
+
 	private Long attrId;
-	/**
-	 * 
-	 */
+
 	private Long attrGroupId;
-	/**
-	 * 
-	 */
+
 	private Integer attrSort;
 
 }

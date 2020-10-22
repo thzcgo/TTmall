@@ -19,9 +19,6 @@ import lombok.Data;
 public class CategoryBrandEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	@TableId
 	private Long id;
 	/**

@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticSearchConfig {
 
-    private static final RequestOptions COMMON_OPTIONS;
+    public static final RequestOptions COMMON_OPTIONS;
+
     static {
         RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
 //        builder.addHeader("Authorization", "Bearer " + TOKEN);

@@ -19,30 +19,17 @@ import lombok.Data;
 public class SkuSaleAttrValueEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
 	@TableId
 	private Long id;
-	/**
-	 * sku_id
-	 */
+
 	private Long skuId;
-	/**
-	 * attr_id
-	 */
+
 	private Long attrId;
-	/**
-	 * 
-	 */
+
 	private String attrName;
-	/**
-	 * 
-	 */
+
 	private String attrValue;
-	/**
-	 * ˳
-	 */
+
 	private Integer attrSort;
 
 }

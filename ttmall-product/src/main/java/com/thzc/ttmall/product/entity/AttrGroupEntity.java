@@ -20,30 +20,17 @@ import lombok.Data;
 public class AttrGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	@TableId
 	private Long attrGroupId;
-	/**
-	 * 
-	 */
+
 	private String attrGroupName;
-	/**
-	 * 
-	 */
+
 	private Integer sort;
-	/**
-	 * 
-	 */
+
 	private String descript;
-	/**
-	 * 
-	 */
+
 	private String icon;
-	/**
-	 * 
-	 */
+
 	private Long catelogId;
 
 	/**

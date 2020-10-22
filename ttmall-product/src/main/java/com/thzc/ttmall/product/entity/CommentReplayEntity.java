@@ -19,18 +19,12 @@ import lombok.Data;
 public class CommentReplayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+
 	@TableId
 	private Long id;
-	/**
-	 * 
-	 */
+
 	private Long commentId;
-	/**
-	 * 
-	 */
+
 	private Long replyId;
 
 }

@@ -19,26 +19,15 @@ import lombok.Data;
 public class SkuImagesEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
 	@TableId
 	private Long id;
-	/**
-	 * sku_id
-	 */
+
 	private Long skuId;
-	/**
-	 * ͼƬ
-	 */
+
 	private String imgUrl;
-	/**
-	 * 
-	 */
+
 	private Integer imgSort;
-	/**
-	 * Ĭ
-	 */
+
 	private Integer defaultImg;
 
 }

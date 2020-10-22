@@ -68,21 +68,13 @@ public class SpuCommentEntity implements Serializable {
 	 * 
 	 */
 	private Integer replyCount;
-	/**
-	 * 
-	 */
+
 	private String resources;
-	/**
-	 * 
-	 */
+
 	private String content;
-	/**
-	 * 
-	 */
+
 	private String memberIcon;
-	/**
-	 * 
-	 */
+
 	private Integer commentType;
 
 }

@@ -35,10 +35,8 @@ public class SpuController {
      * 列表
      */
     @RequestMapping("/list")
-   // @RequiresPermissions("product:spu:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -69,7 +67,6 @@ public class SpuController {
      * 修改
      */
     @RequestMapping("/update")
- //   @RequiresPermissions("product:spu:update")
     public R update(@RequestBody SpuEntity spu){
 		spuService.updateById(spu);
 
@@ -80,7 +77,6 @@ public class SpuController {
      * 删除
      */
     @RequestMapping("/delete")
-   // @RequiresPermissions("product:spu:delete")
     public R delete(@RequestBody Long[] ids){
 		spuService.removeByIds(Arrays.asList(ids));
 

@@ -16,8 +16,6 @@ import com.thzc.ttmall.member.service.MemberService;
 import com.thzc.common.utils.PageUtils;
 import com.thzc.common.utils.R;
 
-
-
 /**
  * 会员
  *
