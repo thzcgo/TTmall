@@ -35,7 +35,6 @@ public class SkuController {
      * 列表
      */
     @RequestMapping("/list")
-   // @RequiresPermissions("product:sku:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = skuService.queryPage(params);
 
