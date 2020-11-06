@@ -1,5 +1,8 @@
 package com.thzc.ttmall.product.service.impl;
 
+import com.thzc.ttmall.product.dao.SkuImagesDao;
+import com.thzc.ttmall.product.entity.SkuImagesEntity;
+import com.thzc.ttmall.product.entity.SkuInfoEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +49,7 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesDao, SpuImagesEnt
             this.saveBatch(collect);
         }
     }
+
+
 
 }

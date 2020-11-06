@@ -32,8 +32,7 @@ import com.thzc.common.utils.R;
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
-    @Autowired
-    private SpuInfoService spuInfoService;
+
 
 //    /**
 //     * 列表

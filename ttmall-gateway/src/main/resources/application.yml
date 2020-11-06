@@ -41,7 +41,7 @@ spring:
       - id: ttmall_host_route
         uri: lb://ttmall-product
         predicates:
-          - Host=ttmall.com
+          - Host=ttmall.com,item.ttmall.com
 
       - id: ttmall_search_route
         uri: lb://ttmall-search
