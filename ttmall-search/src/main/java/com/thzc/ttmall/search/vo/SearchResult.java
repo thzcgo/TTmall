@@ -3,6 +3,7 @@ package com.thzc.ttmall.search.vo;
 import com.thzc.common.to.es.SkuEsModel;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -35,7 +36,10 @@ public class SearchResult {
     private List<CatalogVo> catalogs;
 
     //面包屑导航
-    private List<NavVo> navs;
+    private List<NavVo> navs = new ArrayList<>();
+
+    private List<Long> attrIds;
+
 
 
     @Data

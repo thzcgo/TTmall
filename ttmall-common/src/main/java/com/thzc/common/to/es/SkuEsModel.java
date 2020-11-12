@@ -2,8 +2,11 @@ package com.thzc.common.to.es;
 
 import lombok.Data;
 
+
 import java.math.BigDecimal;
 import java.util.List;
+
+
 @Data
 public class SkuEsModel {
 

@@ -1,10 +1,15 @@
 package com.thzc.ttmall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.thzc.common.to.es.SkuEsModel;
+import com.thzc.common.utils.R;
 import com.thzc.ttmall.search.config.ElasticSearchConfig;
 import com.thzc.ttmall.search.constant.EsConstant;
+import com.thzc.ttmall.search.feign.ProductFeignService;
 import com.thzc.ttmall.search.service.MallSearchService;
+import com.thzc.ttmall.search.vo.AttrResponseVo;
+import com.thzc.ttmall.search.vo.BrandVo;
 import com.thzc.ttmall.search.vo.SearchParam;
 import com.thzc.ttmall.search.vo.SearchResult;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +39,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +52,9 @@ public class MallSearchServiceImpl implements MallSearchService {
     @Autowired
     RestHighLevelClient Client;
 
+    @Autowired
+    ProductFeignService productFeignService;
+
     @Override
     public SearchResult search(SearchParam param) {
         // 动态构建出查询需要的DSL语句
@@ -52,6 +62,7 @@ public class MallSearchServiceImpl implements MallSearchService {
 
         // 1.准备检索请求
         SearchRequest searchRequest = buildSearchRequest(param);
+        System.out.println(searchRequest);
         try {
             // 2.执行检索请求
             SearchResponse response = Client.search(searchRequest, ElasticSearchConfig.COMMON_OPTIONS);
@@ -90,7 +101,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //1.2 bool-fiter
         //1.2.1 catelogId  -- 按照三级分类id
         if(null != param.getCatalog3Id()){
-            boolQuery.filter(QueryBuilders.termQuery("catalogId",param.getCatalog3Id()));
+            boolQuery.filter(QueryBuilders.termQuery("catelogId",param.getCatalog3Id()));
         }
 
         //1.2.2 brandId  品牌
@@ -154,9 +165,17 @@ public class MallSearchServiceImpl implements MallSearchService {
             sourceBuilder.sort(s[0],sortOrder);
         }
 
-        //分页
-        sourceBuilder.from((param.getPageNum()-1)* EsConstant.PRODUCT_PAGESIZE);
-        sourceBuilder.size(EsConstant.PRODUCT_PAGESIZE);
+        if(param.getPageNum() == null) {
+            //分页
+            sourceBuilder.from(0);
+            sourceBuilder.size(EsConstant.PRODUCT_PAGESIZE);
+        } else {
+            //分页
+            sourceBuilder.from((param.getPageNum()-1)* EsConstant.PRODUCT_PAGESIZE);
+            sourceBuilder.size(EsConstant.PRODUCT_PAGESIZE);
+        }
+
+
 
         //高亮
         if(!StringUtils.isEmpty(param.getKeyword())){
@@ -185,9 +204,9 @@ public class MallSearchServiceImpl implements MallSearchService {
         sourceBuilder.aggregation(brand_agg);
 
         //2. 按照分类信息进行聚合
-        TermsAggregationBuilder catalog_agg = AggregationBuilders.terms("catalog_agg");
-        catalog_agg.field("catalogId").size(20);
-        catalog_agg.subAggregation(AggregationBuilders.terms("catalog_name_agg").field("catalogName").size(1));
+        TermsAggregationBuilder catalog_agg = AggregationBuilders.terms("catelog_agg");
+        catalog_agg.field("catelogId").size(20);
+        catalog_agg.subAggregation(AggregationBuilders.terms("catelog_name_agg").field("catelogName").size(1));
 
         sourceBuilder.aggregation(catalog_agg);
 
@@ -272,7 +291,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             // 1、得到品牌的id
             long brandId = bucket.getKeyAsNumber().longValue();
             // 2、得到品牌的名
-            String brandName = ((ParsedStringTerms) bucket.getAggregations().get("brand_name_agg")).getBuckets().get(0).getKeyAsString();
+            String brandName = ((ParsedStringTerms) bucket.getAggregations().get("brand_Name_agg")).getBuckets().get(0).getKeyAsString();
             // 3、得到品牌的图片
             String brandImg = ((ParsedStringTerms) bucket.getAggregations().get("brand_img_agg")).getBuckets().get(0).getKeyAsString();
             brandVo.setBrandId(brandId);
@@ -283,7 +302,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         result.setBrands(brandVos);
 
         //4.当前所有商品所涉及到的所有分类信息
-        ParsedLongTerms catalog_agg = response.getAggregations().get("catalog_agg");
+        ParsedLongTerms catalog_agg = response.getAggregations().get("catelog_agg");
 
         List<SearchResult.CatalogVo> catalogVos = new ArrayList<>();
         List<? extends Terms.Bucket> buckets = catalog_agg.getBuckets();
@@ -293,7 +312,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             String keyAsString = bucket.getKeyAsString();
             catalogVo.setCatalogId(Long.parseLong(keyAsString));
             //得到分类名
-            ParsedStringTerms catalog_name_agg = bucket.getAggregations().get("catalog_name_agg");
+            ParsedStringTerms catalog_name_agg = bucket.getAggregations().get("catelog_name_agg");
             String catalog_name = catalog_name_agg.getBuckets().get(0).getKeyAsString();
             catalogVo.setCatalogName(catalog_name);
             catalogVos.add(catalogVo);
@@ -309,7 +328,80 @@ public class MallSearchServiceImpl implements MallSearchService {
         int totalPage=(int)total%EsConstant.PRODUCT_PAGESIZE == 0?(int)total/EsConstant.PRODUCT_PAGESIZE:(int)(total/EsConstant.PRODUCT_PAGESIZE+1);
         result.setTotalPages(totalPage);
 
-        return null;
+        List<Integer> pageNavs = new ArrayList<>();
+        for(int i = 1; i <= totalPage; i++) {
+            pageNavs.add(i);
+        }
+        result.setPageNavs(pageNavs);
+
+        //6. 构建面包屑导航功能
+        if(param.getAttrs() != null && param.getAttrs().size() > 0) {
+            List<SearchResult.NavVo> collect = param.getAttrs().stream().map(attr -> {
+                //1、分析每个attrs传过来的查询参数值
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                // attrs=2_5寸:6寸
+                String[] s = attr.split("_");
+                navVo.setNavValue(s[1]);
+                R r = productFeignService.attrInfo(Long.parseLong(s[0]));
+                result.getAttrIds().add(Long.parseLong(s[0]));
+                if(r.getCode() == 0){
+                    AttrResponseVo data = r.getData("attr", new TypeReference<AttrResponseVo>(){});
+                    navVo.setNavName(data.getAttrName());
+                }else {
+                    navVo.setNavName(s[0]);
+                }
+                //2、取消了这个面包屑以后，我们要跳转到那个地方
+                // 拿到所有的查询条件，去掉当前
+
+                String replace = replaceQueryString(param, attr, "attrs");
+
+                navVo.setLink("http://search.ttmall.com/list.html?"+replace);
+
+                return navVo;
+            }).collect(Collectors.toList());
+
+            result.setNavs(collect);
+
+            // 品牌、分类
+            if(param.getBrandId()!=null && param.getBrandId().size()>0) {
+                List<SearchResult.NavVo> navs = result.getNavs();
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+
+                navVo.setNavName("品牌");
+                // 远程查询所有品牌
+                R r = productFeignService.brandInfo(param.getBrandId());
+                if(r.getCode() == 0) {
+                    List<BrandVo> brand = r.getData("brand", new TypeReference<List<BrandVo>>() {
+                    });
+                    StringBuffer buffer = new StringBuffer();
+                    String replace ="";
+                    for(BrandVo brandVo : brand) {
+                        buffer.append(brandVo.getBrandName()+";");
+                        replace = replaceQueryString(param, brandVo.getBrandId()+"","brandId");
+                    }
+                    navVo.setNavValue(buffer.toString());
+                    navVo.setLink("http://search.ttmall.com/list.html?"+replace);
+                }
+                navs.add(navVo);
+
+
+            }
+        }
+        return result;
+    }
+
+    private String replaceQueryString(SearchParam param, String value, String key) {
+
+        String encode = null;
+        try{
+            encode = URLEncoder.encode(value, "UTF-8");
+            // 浏览器对空格编码和java的不一样
+            encode = encode.replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return param.get_queryString().replace("&"+key+"="+encode,"");
     }
 
 }

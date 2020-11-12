@@ -301,12 +301,38 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
         // 4 封装每个sku的信息
         Map<Long, Boolean> finalStockMap = stockMap;
+
+//        List<SkuEsModel> upProducts = null;
+//        for (SkuInfoEntity sku : skus) {
+//            SkuEsModel esModel = new SkuEsModel();
+//            BeanUtils.copyProperties(sku, esModel);
+//            esModel.setSkuPrice(sku.getPrice());
+//            esModel.setSkuImg(sku.getSkuDefaultImg());
+//            if(finalStockMap == null){
+//                // 远程调用失败，任认为该sku有库存
+//                esModel.setHasStock(true);
+//            }else{
+//                esModel.setHasStock(finalStockMap.get(sku.getSkuId()));
+//            }
+//            esModel.setHotScore(0L);
+//            BrandEntity brand = brandService.getById(esModel.getBrandId());
+//            esModel.setBrandName(brand.getName());
+//            esModel.setBrandImg(brand.getLogo());
+//            CategoryEntity category = categoryService.getById(esModel.getCatelogId());
+//            esModel.setCatelogName(category.getName());
+//            //设置检索属性
+//            esModel.setAttrs(attrsList);
+//            upProducts.add(esModel);
+//            System.out.println(upProducts);
+//        }
+
         List<SkuEsModel> upProducts = skus.stream().map(sku -> {
             SkuEsModel esModel = new SkuEsModel();
             // 将sku中与esModel通用的属性直接赋给esModel
             BeanUtils.copyProperties(sku, esModel);
             // 设置sku,esModel有但是名字不同的属性
             // skuPrice, skuImg
+            esModel.setCatelogId(sku.getCatalogId());
             esModel.setSkuPrice(sku.getPrice());
             esModel.setSkuImg(sku.getSkuDefaultImg());
             // hasStock，hotScore
@@ -317,7 +343,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             }else{
                 esModel.setHasStock(finalStockMap.get(sku.getSkuId()));
             }
-            System.out.println(attrsList);
+
             //设置热度评分初始为0
             esModel.setHotScore(0L);
 
@@ -325,15 +351,15 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             BrandEntity brand = brandService.getById(esModel.getBrandId());
             esModel.setBrandName(brand.getName());
             esModel.setBrandImg(brand.getLogo());
-            CategoryEntity category = categoryService.getById(esModel.getCatelogName());
+            CategoryEntity category = categoryService.getById(sku.getCatalogId());
             esModel.setCatelogName(category.getName());
             //设置检索属性
-         //   esModel.setAttrs(attrsList);
+            esModel.setAttrs(attrsList);
 
             return esModel;
         }).collect(Collectors.toList());
-
         System.out.println(upProducts);
+
 
         // TODO 5、将数据发送给es进行保存
         R r = searchFeignService.productStatusUp(upProducts);

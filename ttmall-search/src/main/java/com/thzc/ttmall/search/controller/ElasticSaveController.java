@@ -34,7 +34,7 @@ public class ElasticSaveController {
             return R.error(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMsg());
         }
 
-        if(b) {
+        if(!b) {
             return R.ok();
         }
         else {
